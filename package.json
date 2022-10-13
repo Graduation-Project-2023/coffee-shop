@@ -1,0 +1,25 @@
+{
+  "name": "coffee-shop",
+  "version": "1.0.0",
+  "description": "Coffee Shop Backend APIs",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "nodemon",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Saif Abuelhasan",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^4.4.0",
+    "@types/express": "^4.17.14",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "prisma": "^4.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.8.5",
+    "nodemon": "^2.0.20",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4"
+  }
+}
