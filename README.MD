@@ -9,11 +9,8 @@
 
 ## Database Setup
 
-- Create development and testing databases
-- Create a database user
-- Grant all privileges on both databases to the new user
-- Create a `database.json` file in root directory
-- Install `db-migrate` and `db-migrate-pg` packages
-- Create a `migrations` folder in root directory
-- Create a new migration using command `db-migrate create <migration-name>`
-- Move up and down test migrations using `db-migrate --env test up` and `db-migrate --env test down`
+- Run docker-compose up to start the database
+- Run docker-compose down to stop the database
+- Run npx prisma migrate dev --name init to create the database schema
+- Run npx prisma migrate reset to reset database
+- Run docker exec -it postgres psql -U postgres -d postgres to connect to the database
