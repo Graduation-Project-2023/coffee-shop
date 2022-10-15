@@ -5,7 +5,11 @@
   "main": "src/index.ts",
   "scripts": {
     "start": "nodemon",
-    "test": "mocha --require ts-node/register src/test/*.test.ts"
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "mocha": "mocha --require ts-node/register src/test/*.test.ts",
+    "migrate": "npx prisma migrate dev",
+    "test": "npm run mocha"
   },
   "author": "Saif Abuelhasan",
   "license": "ISC",

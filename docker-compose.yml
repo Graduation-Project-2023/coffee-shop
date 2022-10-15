@@ -1,12 +1,39 @@
-version: "3.7"
+# Set the version of docker compose to use
+version: "3.9"
+
+# The containers that compose the project
 services:
-  postgres:
-    image: postgres:12.2
-    container_name: postgres
+  dev_db:
+    image: postgres:13
+    container_name: dev_postgres
     restart: always
     environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: development
+      POSTGRES_DB: dev
     ports:
-      - 5432:5432
+      - 5433:5432
+
+  test_db:
+    image: postgres:13
+    restart: always
+    container_name: test_postgres
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: tests
+
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+
+    depends_on:
+      - dev_db
+
+    environment:
+      DATABASE_URL: postgres://development:password@dev_db:5432/dev
