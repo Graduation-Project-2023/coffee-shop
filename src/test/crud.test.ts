@@ -32,9 +32,9 @@ describe("crud", () => {
   });
 
   after(async () => {
-    await prisma.user.delete({
-      where: { id: user.id },
-    });
+    const deleteUsers = prisma.user.deleteMany();
+    await prisma.$transaction([deleteUsers]);
+    await prisma.$disconnect();
   });
 
   it("should create a user", async () => {
