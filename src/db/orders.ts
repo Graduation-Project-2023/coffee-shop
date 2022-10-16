@@ -8,7 +8,15 @@ export class OrderRepo implements IRepo {
       data: {
         ...order,
         items: {
-          create: items,
+          create: items.map((item: any) => {
+            const { toppings, ...itemData } = item;
+            return {
+              ...itemData,
+              toppings: {
+                create: toppings,
+              },
+            };
+          }),
         },
       },
     });
