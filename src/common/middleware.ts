@@ -27,9 +27,9 @@ export const validateSameUser = (
   res: Response,
   next: Function
 ) => {
-  const { id } = req.params;
+  const { userId } = req.params;
   const { user } = req;
-  if (user.id !== id) {
+  if (user.id !== userId) {
     return res.status(401).json({ error: "Access denied" });
   }
   next();

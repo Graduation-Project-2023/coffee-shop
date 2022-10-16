@@ -1,22 +1,23 @@
 import express from "express";
 import { isAdmin, isAuthenticated } from "../common/middleware";
 import { create, read, readAll, update, remove } from "../common/crud";
-import prisma from "../db";
+import { ProductRepo } from "../db/products";
 
 const router = express.Router();
+const repo = new ProductRepo();
 
-router.get("/", readAll(prisma.product.findMany));
+router.get("/", readAll(repo));
 
 router.use(isAuthenticated);
 
 router.use(isAdmin);
 
-router.get("/:id", read(prisma.product.findUnique));
+router.get("/:id", read(repo));
 
-router.post("/", create(prisma.product.create));
+router.post("/", create(repo));
 
-router.put("/:id", update(prisma.product.update));
+router.put("/:id", update(repo));
 
-router.delete("/:id", remove(prisma.product.delete));
+router.delete("/:id", remove(repo));
 
 export default router;

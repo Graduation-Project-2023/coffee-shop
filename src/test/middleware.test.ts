@@ -29,7 +29,7 @@ app
   .post("/notFound", resourceNotFound)
   .post("/isAuthenticated", mockAuth, isAuthenticated, resourceNotFound)
   .post(
-    "/validateSameUser/:id",
+    "/validateSameUser/:userId",
     mockAuth,
     isAuthenticated,
     validateSameUser,

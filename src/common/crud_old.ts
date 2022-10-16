@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
-import IRepo from "../db/repo";
 
-export const create = (repo: IRepo) => {
+export const create = (prismaCreate: Function) => {
   return async (req: Request, res: Response) => {
     const { body } = req;
     try {
-      const data = await repo.create(body);
+      const data = await prismaCreate({
+        data: body,
+      });
       res.status(201).json(data);
     } catch (error) {
       res.status(400).json({ error });
@@ -13,11 +14,13 @@ export const create = (repo: IRepo) => {
   };
 };
 
-export const read = (repo: IRepo) => {
+export const read = (prismaRead: Function) => {
   return async (req: Request, res: Response) => {
     const { id } = req.params;
     try {
-      const data = await repo.read(id);
+      const data = await prismaRead({
+        where: { id: id },
+      });
       res.status(200).json(data);
     } catch (error) {
       res.status(400).json({ error });
@@ -25,10 +28,10 @@ export const read = (repo: IRepo) => {
   };
 };
 
-export const readAll = (repo: IRepo) => {
+export const readAll = (prismaReadAll: Function) => {
   return async (req: Request, res: Response) => {
     try {
-      const data = await repo.readAll();
+      const data = await prismaReadAll();
       res.status(200).json(data);
     } catch (error) {
       res.status(400).json({ error });
@@ -36,12 +39,15 @@ export const readAll = (repo: IRepo) => {
   };
 };
 
-export const update = (repo: IRepo) => {
+export const update = (prismaUpdate: Function) => {
   return async (req: Request, res: Response) => {
     const { id } = req.params;
     const { body } = req;
     try {
-      const data = await repo.update(id, body);
+      const data = await prismaUpdate({
+        where: { id: id },
+        data: body,
+      });
       res.status(200).json(data);
     } catch (error) {
       res.status(400).json({ error });
@@ -49,11 +55,13 @@ export const update = (repo: IRepo) => {
   };
 };
 
-export const remove = (repo: IRepo) => {
+export const remove = (prismaRemove: Function) => {
   return async (req: Request, res: Response) => {
     const { id } = req.params;
     try {
-      const data = await repo.delete(id);
+      const data = await prismaRemove({
+        where: { id: id },
+      });
       res.status(200).json(data);
     } catch (error) {
       res.status(400).json({ error });
