@@ -4,9 +4,10 @@
   "description": "Coffee Shop Backend APIs",
   "main": "src/index.ts",
   "scripts": {
+    "build": "tsc",
     "start": "nodemon",
-    "docker:up": "docker-compose up -d",
-    "docker:down": "docker-compose down",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
     "mocha": "mocha --require ts-node/register src/test/*.test.ts",
     "migrate": "npx prisma migrate dev",
     "test": "npm run mocha"
