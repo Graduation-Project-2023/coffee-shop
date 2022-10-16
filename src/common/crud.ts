@@ -29,6 +29,17 @@ export const read = (prismaRead: Function) => {
   };
 };
 
+export const readAll = (prismaReadAll: Function) => {
+  return async (req: Request, res: Response) => {
+    try {
+      const data = await prismaReadAll();
+      res.status(200).json(data);
+    } catch (error) {
+      res.status(400).json({ error });
+    }
+  };
+};
+
 export const update = (prismaUpdate: Function) => {
   return async (req: Request, res: Response) => {
     const { id } = req.params;
