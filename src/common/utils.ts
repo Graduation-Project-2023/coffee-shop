@@ -8,10 +8,10 @@ export const getTokenFromRequest = (req: Request): string | undefined => {
   return token;
 };
 
-export const attachUserToRequest = (req: Request, token: string): Request => {
+export const getDecodedUser = (req: Request, token: string) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!);
-    return { ...req, user: decoded } as Request;
+    return decoded;
   } catch (error) {
     throw error;
   }

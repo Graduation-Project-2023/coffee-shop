@@ -1,8 +1,5 @@
 import { Request, Response } from "express";
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
-import { attachUserToRequest, getTokenFromRequest } from "./utils";
-dotenv.config();
+import { getDecodedUser, getTokenFromRequest } from "./utils";
 
 export const resourceNotFound = (req: Request, res: Response) => {
   res.status(404).json({ error: "Resource not found" });
@@ -18,7 +15,7 @@ export const isAuthenticated = (
     return res.status(401).json({ error: "Access denied" });
   }
   try {
-    req = attachUserToRequest(req, token);
+    req.user = getDecodedUser(req, token);
     next();
   } catch (error) {
     return res.status(400).json({ error: "Invalid token" });
