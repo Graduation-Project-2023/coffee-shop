@@ -1,23 +1,28 @@
+import { OrderProduct, Prisma } from "@prisma/client";
 import prisma from ".";
 import IRepo from "./repo";
+import { getOrderPrice } from "./repoUtils";
 
 export class OrderRepo implements IRepo {
-  async create(data: any) {
+  async create(data: {
+    customerId: string;
+    items: Prisma.OrderProductCreateManyOrderInput[];
+  }) {
     const { items, ...order } = data;
+    const total = getOrderPrice(items);
     return await prisma.order.create({
       data: {
-        ...order,
+        customerId: order.customerId,
+        orderDate: new Date(),
+        total,
         items: {
-          create: items.map((item: any) => {
-            const { toppings, ...itemData } = item;
-            return {
-              ...itemData,
-              toppings: {
-                create: toppings,
-              },
-            };
-          }),
+          createMany: {
+            data: items,
+          },
         },
+      },
+      include: {
+        items: true,
       },
     });
   }
@@ -37,7 +42,7 @@ export class OrderRepo implements IRepo {
     return await prisma.order.findMany();
   }
 
-  async update(id: string, data: any) {
+  async update(id: string, data: Prisma.OrderUpdateInput) {
     return await prisma.order.update({
       where: {
         id,
