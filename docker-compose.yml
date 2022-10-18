@@ -3,17 +3,6 @@ version: "3.9"
 
 # The containers that compose the project
 services:
-  dev_db:
-    image: postgres:13
-    container_name: dev_postgres
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: password
-      POSTGRES_USER: development
-      POSTGRES_DB: dev
-    ports:
-      - 5433:5432
-
   test_db:
     image: postgres:13
     restart: always
@@ -24,16 +13,3 @@ services:
       POSTGRES_USER: test
       POSTGRES_PASSWORD: password
       POSTGRES_DB: tests
-
-  web:
-    build: .
-    ports:
-      - "3001:3000"
-    volumes:
-      - .:/app
-
-    depends_on:
-      - dev_db
-
-    environment:
-      DATABASE_URL: postgres://development:password@dev_db:5432/dev
