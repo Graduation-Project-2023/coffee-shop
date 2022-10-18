@@ -4,13 +4,15 @@
   "description": "Coffee Shop Backend APIs",
   "main": "src/index.ts",
   "scripts": {
-    "build": "tsc",
-    "start": "nodemon",
+    "start": "node index.js",
     "docker:up": "docker compose up -d",
     "docker:down": "docker compose down",
     "mocha": "mocha --require ts-node/register src/test/*.test.ts",
     "mocha:api": "mocha --require ts-node/register --parallel false --timeout 200000 src/test/api/*.test.ts",
     "migrate": "npx prisma migrate dev",
+    "clean": "rm -rf www/ || true",
+    "build": "npm install . && npm run clean && tsc && cp -rf build/ www/ && cp -R .elasticbeanstalk www/.elasticbeanstalk && cp .npmrc www/.npmrc && cp package.json www/package.json && cd www && zip -r Archive.zip . && cd ..",
+    "deploy": "npm run build && eb list && eb use coffee-shop && eb deploy && chmod +x bin/eb_setenv.sh && bin/eb_setenv.sh",
     "test": "npm run mocha",
     "test:api": "npm run mocha:api"
   },
