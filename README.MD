@@ -1,5 +1,7 @@
 # Coffee Shop
 
+hosted on [AWS](http://coffee-shop.us-east-1.elasticbeanstalk.com/)
+
 ## Project Setup
 
 - run `npm install` to install all dependencies
