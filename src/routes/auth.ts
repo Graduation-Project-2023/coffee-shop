@@ -68,3 +68,5 @@ const login = async (req: Request, res: Response) => {
 router
   .post("/signup", isValidPassword, hashPassword, signup, login)
   .post("/login", findCustomer, validatePassword, login);
+
+export default router;

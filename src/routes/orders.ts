@@ -10,13 +10,13 @@ const repo = new OrderRepo();
 
 router.use(isAuthenticated);
 
+router.post("/", create(repo));
+
 router.use(isAdmin);
 
 router.get("/", readAll(repo));
 
 router.get("/:id", read(repo));
-
-router.post("/", create(repo));
 
 router.put("/:id", update(repo));
 
