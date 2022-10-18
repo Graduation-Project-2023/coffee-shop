@@ -9,8 +9,10 @@
     "docker:up": "docker compose up -d",
     "docker:down": "docker compose down",
     "mocha": "mocha --require ts-node/register src/test/*.test.ts",
+    "mocha:api": "mocha --require ts-node/register --parallel false --timeout 200000 src/test/api/*.test.ts",
     "migrate": "npx prisma migrate dev",
-    "test": "npm run mocha"
+    "test": "npm run mocha",
+    "test:api": "npm run mocha:api"
   },
   "author": "Saif Abuelhasan",
   "license": "ISC",
