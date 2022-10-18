@@ -13,6 +13,15 @@ app.use("/api", routes);
 
 app.use(resourceNotFound);
 
+app.use((error: any, req: any, res: any, next: any) => {
+  if (error.clientVersion) {
+    return res.status(500).send("Invalid arguments");
+  }
+  return res.status(500).send(`Something went wrong: ${error.message}`);
+});
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
+
+export default app;
