@@ -1,8 +1,9 @@
+import { Prisma } from "@prisma/client";
 import prisma from ".";
 import IRepo from "./repo";
 
 export class UserRepo implements IRepo {
-  async create(data: any) {
+  async create(data: Prisma.UserCreateWithoutCustomerInput) {
     return await prisma.user.create({
       data,
     });
@@ -16,11 +17,22 @@ export class UserRepo implements IRepo {
     });
   }
 
+  async readByUserName(username: string) {
+    return await prisma.user.findUnique({
+      where: {
+        username,
+      },
+      include: {
+        customer: true,
+      },
+    });
+  }
+
   async readAll() {
     return await prisma.user.findMany();
   }
 
-  async update(id: string, data: any) {
+  async update(id: string, data: Prisma.UserUpdateInput) {
     return await prisma.user.update({
       where: {
         id,

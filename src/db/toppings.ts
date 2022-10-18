@@ -1,8 +1,9 @@
+import { Prisma } from "@prisma/client";
 import prisma from ".";
 import IRepo from "./repo";
 
 export class ToppingRepo implements IRepo {
-  async create(data: any) {
+  async create(data: Prisma.ToppingCreateInput) {
     return await prisma.topping.create({
       data,
     });
@@ -20,7 +21,7 @@ export class ToppingRepo implements IRepo {
     return await prisma.topping.findMany();
   }
 
-  async update(id: string, data: any) {
+  async update(id: string, data: Prisma.ToppingUpdateInput) {
     return await prisma.topping.update({
       where: {
         id,

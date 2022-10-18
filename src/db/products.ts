@@ -1,8 +1,9 @@
 import prisma from ".";
+import { Prisma } from "@prisma/client";
 import IRepo from "./repo";
 
 export class ProductRepo implements IRepo {
-  async create(data: any) {
+  async create(data: Prisma.ProductCreateInput) {
     return await prisma.product.create({
       data,
     });
@@ -20,7 +21,7 @@ export class ProductRepo implements IRepo {
     return await prisma.product.findMany();
   }
 
-  async update(id: string, data: any) {
+  async update(id: string, data: Prisma.ProductUpdateInput) {
     return await prisma.product.update({
       where: {
         id,
