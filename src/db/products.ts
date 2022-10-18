@@ -9,10 +9,10 @@ export class ProductRepo implements IRepo {
     });
   }
 
-  async read(id: string) {
+  async read(query: Prisma.ProductWhereUniqueInput) {
     return await prisma.product.findUnique({
       where: {
-        id,
+        ...query,
       },
     });
   }
@@ -21,19 +21,22 @@ export class ProductRepo implements IRepo {
     return await prisma.product.findMany();
   }
 
-  async update(id: string, data: Prisma.ProductUpdateInput) {
+  async update(
+    query: Prisma.ProductWhereUniqueInput,
+    data: Prisma.ProductUpdateInput
+  ) {
     return await prisma.product.update({
       where: {
-        id,
+        ...query,
       },
       data,
     });
   }
 
-  async delete(id: string) {
+  async delete(query: Prisma.ProductWhereUniqueInput) {
     return await prisma.product.delete({
       where: {
-        id,
+        ...query,
       },
     });
   }

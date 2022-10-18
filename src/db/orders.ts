@@ -27,10 +27,10 @@ export class OrderRepo implements IRepo {
     });
   }
 
-  async read(id: string) {
+  async read(query: Prisma.OrderWhereUniqueInput) {
     return await prisma.order.findUnique({
       where: {
-        id,
+        ...query,
       },
       include: {
         items: true,
@@ -42,19 +42,22 @@ export class OrderRepo implements IRepo {
     return await prisma.order.findMany();
   }
 
-  async update(id: string, data: Prisma.OrderUpdateInput) {
+  async update(
+    query: Prisma.OrderWhereUniqueInput,
+    data: Prisma.OrderUpdateInput
+  ) {
     return await prisma.order.update({
       where: {
-        id,
+        ...query,
       },
       data,
     });
   }
 
-  async delete(id: string) {
+  async delete(query: Prisma.OrderWhereUniqueInput) {
     return await prisma.order.delete({
       where: {
-        id,
+        ...query,
       },
     });
   }

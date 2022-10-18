@@ -3,29 +3,9 @@ import prisma from ".";
 import IRepo from "./repo";
 
 export class CustomerRepo implements IRepo {
-  async create(
-    data: Prisma.CustomerCreateWithoutUserInput & {
-      username: string;
-      password: string;
-    }
-  ) {
-    const { username, password, ...customer } = data;
+  async create(data: Prisma.CustomerCreateManyInput) {
     return await prisma.customer.create({
-      data: {
-        user: {
-          connectOrCreate: {
-            where: {
-              username,
-            },
-            create: {
-              username,
-              password,
-              role: "CUSTOMER",
-            },
-          },
-        },
-        ...customer,
-      },
+      data,
     });
   }
 

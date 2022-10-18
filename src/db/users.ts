@@ -1,26 +1,70 @@
-import { Prisma } from "@prisma/client";
+import { Customer, Prisma, User } from "@prisma/client";
 import prisma from ".";
 import IRepo from "./repo";
 
 export class UserRepo implements IRepo {
-  async create(data: Prisma.UserCreateWithoutCustomerInput) {
+  async createCustomer(
+    data: Prisma.UserCreateWithoutCustomerInput & {
+      customer: Prisma.XOR<
+        Prisma.CustomerCreateWithoutUserInput,
+        Prisma.CustomerUncheckedCreateWithoutUserInput
+      >;
+    }
+  ): Promise<
+    | User & {
+        customer: Customer | null;
+      }
+  > {
+    const { customer, ...userData } = data;
     return await prisma.user.create({
-      data,
-    });
-  }
-
-  async read(id: string) {
-    return await prisma.user.findUnique({
-      where: {
-        id,
+      data: {
+        ...userData,
+        customer: {
+          create: customer,
+        },
+      },
+      include: {
+        customer: true,
       },
     });
   }
 
-  async readByUserName(username: string) {
+  async create(
+    data: Prisma.UserCreateWithoutCustomerInput & {
+      customer?: Prisma.XOR<
+        Prisma.CustomerCreateWithoutUserInput,
+        Prisma.CustomerUncheckedCreateWithoutUserInput
+      >;
+    }
+  ): Promise<
+    | User & {
+        customer?: Customer | null;
+      }
+  > {
+    const { customer, ...userData } = data;
+    if (data.role === "CUSTOMER") {
+      if (!data.customer) {
+        throw new Error("Customer data is required");
+      }
+      return await this.createCustomer({
+        ...userData,
+        customer: data.customer,
+      });
+    }
+    return await prisma.user.create({
+      data: userData,
+    });
+  }
+
+  async read(query: Prisma.UserWhereUniqueInput): Promise<
+    | (User & {
+        customer?: Customer | null;
+      })
+    | null
+  > {
     return await prisma.user.findUnique({
       where: {
-        username,
+        ...query,
       },
       include: {
         customer: true,
@@ -32,19 +76,22 @@ export class UserRepo implements IRepo {
     return await prisma.user.findMany();
   }
 
-  async update(id: string, data: Prisma.UserUpdateInput) {
+  async update(
+    query: Prisma.UserWhereUniqueInput,
+    data: Prisma.UserUpdateInput
+  ) {
     return await prisma.user.update({
       where: {
-        id,
+        ...query,
       },
       data,
     });
   }
 
-  async delete(id: string) {
+  async delete(query: Prisma.UserWhereUniqueInput) {
     return await prisma.user.delete({
       where: {
-        id,
+        ...query,
       },
     });
   }

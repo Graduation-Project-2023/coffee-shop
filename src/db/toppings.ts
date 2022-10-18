@@ -9,10 +9,10 @@ export class ToppingRepo implements IRepo {
     });
   }
 
-  async read(id: string) {
+  async read(query: Prisma.ToppingWhereUniqueInput) {
     return await prisma.topping.findUnique({
       where: {
-        id,
+        ...query,
       },
     });
   }
@@ -21,19 +21,22 @@ export class ToppingRepo implements IRepo {
     return await prisma.topping.findMany();
   }
 
-  async update(id: string, data: Prisma.ToppingUpdateInput) {
+  async update(
+    query: Prisma.ToppingWhereUniqueInput,
+    data: Prisma.ToppingUpdateInput
+  ) {
     return await prisma.topping.update({
       where: {
-        id,
+        ...query,
       },
       data,
     });
   }
 
-  async delete(id: string) {
+  async delete(query: Prisma.ToppingWhereUniqueInput) {
     return await prisma.topping.delete({
       where: {
-        id,
+        ...query,
       },
     });
   }
