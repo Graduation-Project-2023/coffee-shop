@@ -1,1 +1,2 @@
-eb setenv
+#!/bin/bash
+eb setenv PORT=$PORT JWT_SECRET=$JWT_SECRET RDS_URL=$RDS_URL
