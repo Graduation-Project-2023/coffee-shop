@@ -12,9 +12,9 @@ router.use(isAuthenticated);
 
 router.use(isAdmin);
 
-router.get("/:id", read(repo));
-
 router.post("/", create(repo));
+
+router.get("/:id", read(repo));
 
 router.put("/:id", update(repo));
 

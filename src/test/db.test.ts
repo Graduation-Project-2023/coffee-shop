@@ -3,9 +3,11 @@ import { CustomerRepo } from "../db/customers";
 import prisma from "../db";
 import { expect } from "chai";
 import { ProductRepo } from "../db/products";
+import { UserRepo } from "../db/users";
 
 const orderRepo = new OrderRepo();
 const customerRepo = new CustomerRepo();
+const userRepo = new UserRepo();
 const productRepo = new ProductRepo();
 
 describe("orders", () => {
@@ -14,14 +16,17 @@ describe("orders", () => {
   let product2Id: string;
 
   before(async () => {
-    const customer = await customerRepo.create({
-      username: "test",
-      password: "test",
-      firstName: "test",
-      lastName: "test",
+    const customer = await userRepo.create({
+      username: "customer1",
+      password: "password",
+      role: "CUSTOMER",
+      customer: {
+        firstName: "customer1",
+        lastName: "customer1",
+      },
     });
 
-    customer1Id = customer.userId;
+    customer1Id = customer.id;
 
     const product1 = await productRepo.create({
       name: "test",
