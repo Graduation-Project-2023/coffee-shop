@@ -66,7 +66,9 @@ const findCustomer = async (req: Request, res: Response, next: Function) => {
 const findAdmin = async (req: Request, res: Response, next: Function) => {
   const { username, password } = req.body;
   try {
-    const user = await userRepo.read(username);
+    const user = await userRepo.read({
+      username,
+    });
     if (!user || user.customer || user.role !== "ADMIN") {
       return res.status(400).send("Invalid username or password");
     }
