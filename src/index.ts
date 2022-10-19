@@ -13,6 +13,15 @@ app.use(cors());
 
 app.use("/api", routes);
 
+app.get(
+  "/",
+  (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    res.send(
+      'please take a look at the <a href="https://github.com/Graduation-Project-2023/coffee-shop#readme%22%3E"> documentation</a> there are no routes here'
+    );
+  }
+);
+
 app.use(resourceNotFound);
 
 app.use((error: any, req: any, res: any, next: any) => {
