@@ -31,6 +31,8 @@ jobs:
     steps:
       - node/install:
           node-version: "16.17"
+      - node/install:
+          node-version: "16.17"
       - eb/setup
       - aws-cli/setup
       - checkout
@@ -43,7 +45,6 @@ jobs:
 workflows:
   coffe-shop:
     jobs:
-      - build
       - hold:
           filters:
             branches:
