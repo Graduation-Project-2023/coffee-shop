@@ -51,9 +51,7 @@ export class UserRepo implements IRepo {
         customer: data.customer,
       });
     }
-    return await prisma.user.create({
-      data: userData,
-    });
+    throw new Error("Can't sign up as admin");
   }
 
   async read(query: Prisma.UserWhereUniqueInput): Promise<
