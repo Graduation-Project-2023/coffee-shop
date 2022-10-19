@@ -8,13 +8,13 @@ const repo = new ProductRepo();
 
 router.get("/", readAll(repo));
 
+router.get("/:id", read(repo));
+
 router.use(isAuthenticated);
 
 router.use(isAdmin);
 
 router.post("/", create(repo));
-
-router.get("/:id", read(repo));
 
 router.put("/:id", update(repo));
 
