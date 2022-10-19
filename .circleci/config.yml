@@ -43,15 +43,12 @@ jobs:
 workflows:
   coffe-shop:
     jobs:
-      - build
       - hold:
           filters:
             branches:
               only:
                 - master
           type: approval
-          requires:
-            - build
       - deploy:
           requires:
             - hold
