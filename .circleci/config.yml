@@ -22,8 +22,6 @@ jobs:
             echo "NODE --version"
             echo $(node --version)
             npm run build
-      - store_artifacts:
-          path: www
 
   # deploy step will run only after manual approval
   deploy:
@@ -31,26 +29,27 @@ jobs:
       - image: "cimg/base:stable"
       # more setup needed for aws, node, elastic beanstalk
     steps:
+      - node/install:
+          node-version: "16.17"
       - eb/setup
       - aws-cli/setup
       - checkout
       - run:
           name: Deploy the backend
           command: |
+            echo "Build Backend"
+            npm run build
             echo "Deploy Backend"
             npm run deploy
 
 workflows:
   coffe-shop:
     jobs:
-      - build
       - hold:
           filters:
             branches:
               only:
                 - master
-          requires:
-            - build
           type: approval
       - deploy:
           requires:
