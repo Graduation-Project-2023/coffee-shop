@@ -32,7 +32,7 @@ hosted on [AWS](http://coffee-shop.us-east-1.elasticbeanstalk.com/)
 - GET `/api/orders` - [admin token] - get all orders
 - GET `/api/orders/:id` - [admin token] - get an order by id
 - POST `/api/orders` - [user token] body: `{ items: [{ description, productId, size, sugar, price }] }` - creates a new order
-- DELETE `/api/orders/:id` - delete order (admin only)
+- DELETE `/api/orders/:id` - [admin token] - deletes an order
 
 <!-- - GET `/api/toppings` - get all toppings
 - GET `/api/toppings/:id` - get topping by id
