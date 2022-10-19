@@ -13,21 +13,30 @@ hosted on [AWS](http://coffee-shop.us-east-1.elasticbeanstalk.com/)
 
 ## API
 
+### Authentication
+
+- POST `/api/auth/signup` - body: `{ username, password, role }` - creates a new user
+- POST `/api/auth/login` - body: `{ username, password }` - returns a JWT token
+- POST `/api/auth/admin/login` - body: `{ username, password }` - returns a JWT token
+
+### Products
+
 - GET `/api/products` - get all products
-- GET `/api/products/:id` - get product by id
-- POST `/api/products` - create product (admin only)
-- PUT `/api/products/:id` - update product (admin only)
-- DELETE `/api/products/:id` - delete product (admin only)
+- GET `/api/products/:id` - get a product by id
+- POST `/api/products` - [admin token] body: `{ name, price, description?, image?, hasToppings }` - creates a new product
+- PUT `/api/products/:id` - [admin token] body: `{ name?, price?, description?, hasToppings? }` - updates a product
+- DELETE `/api/products/:id` - [admin token] - deletes a product
 
-- GET `/api/toppings` - get all toppings
-- GET `/api/toppings/:id` - get topping by id
-- POST `/api/toppings` - create topping (admin only)
-- PUT `/api/toppings/:id` - update topping (admin only)
-- DELETE `/api/toppings/:id` - delete topping (admin only)
+### Orders
 
-- GET `/api/orders` - get all orders (admin only)
-- GET `/api/orders/:id` - get order by id (admin only)
-- POST `/api/orders` - create order (user only)
-- PUT `/api/orders/:id` - update order (user only)
+- GET `/api/orders` - [admin token] - get all orders
+- GET `/api/orders/:id` - [admin token] - get an order by id
+- POST `/api/orders` - [user token] body: `{ items: [{ description, productId, size, sugar, price }] }` - creates a new order
 - DELETE `/api/orders/:id` - delete order (admin only)
-- GET `/api/orders/user/:id` - get orders by user id (user only)
+
+<!-- - GET `/api/toppings` - get all toppings
+- GET `/api/toppings/:id` - get topping by id
+- POST `/api/toppings` - [admin token] body: `{ name, price, image? }` - creates a new topping
+- PUT `/api/toppings/:id` - [admin token] body: `{ name?, price?, image? }` - updates a topping
+- DELETE `/api/toppings/:id` - [admin token] - deletes a topping
+ -->
