@@ -55,6 +55,13 @@ describe("integration tests", () => {
       customerToken = res.body.token;
     });
 
+    it("should create an admin user", async () => {
+      const res = await request.post("/api/auth/signup").send(testAdmin);
+      expect(res.status).to.equal(200);
+      expect(res.body).to.have.property("token");
+      adminToken = res.body.token;
+    });
+
     it("should login a user", async () => {
       const res = await request.post("/api/auth/login").send({
         username: "testuser",
