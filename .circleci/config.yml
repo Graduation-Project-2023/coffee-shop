@@ -43,6 +43,7 @@ jobs:
 workflows:
   coffe-shop:
     jobs:
+      - build
       - hold:
           filters:
             branches:
@@ -51,4 +52,5 @@ workflows:
           type: approval
       - deploy:
           requires:
+            - build
             - hold
