@@ -7,21 +7,21 @@ orbs:
   # different jobs are calles later in the workflows sections
 jobs:
   build:
-    # docker:
-    #   # the base image can run most needed actions with orbs
-    #   - image: "cimg/node:16.17"
-    # steps:
-    #   # install node and checkout code
-    #   - node/install:
-    #       node-version: "16.17"
-    #   - checkout
-    #   # build the project
-    #   - run:
-    #       name: build the project
-    #       command: |
-    #         echo "NODE --version"
-    #         echo $(node --version)
-    #         npm run build
+    docker:
+      # the base image can run most needed actions with orbs
+      - image: "cimg/node:16.17"
+    steps:
+      # install node and checkout code
+      - node/install:
+          node-version: "16.17"
+      - checkout
+      # build the project
+      - run:
+          name: build the project
+          command: |
+            echo "NODE --version"
+            echo $(node --version)
+            npm run build
 
   # deploy step will run only after manual approval
   deploy:
