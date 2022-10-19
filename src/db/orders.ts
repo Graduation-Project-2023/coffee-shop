@@ -46,12 +46,7 @@ export class OrderRepo implements IRepo {
     query: Prisma.OrderWhereUniqueInput,
     data: Prisma.OrderUpdateInput
   ) {
-    return await prisma.order.update({
-      where: {
-        ...query,
-      },
-      data,
-    });
+    throw new Error("Method not implemented.");
   }
 
   async delete(query: Prisma.OrderWhereUniqueInput) {
