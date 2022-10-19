@@ -7,8 +7,10 @@ orbs:
   # different jobs are calles later in the workflows sections
 jobs:
   build:
+    docker:
+      # the base image can run most needed actions with orbs
+      - image: "cimg/node:16.17"
     steps:
-      # install node and checkout code
       - checkout
       # build the project
       - run:
@@ -17,10 +19,14 @@ jobs:
             echo "NODE --version" 
             echo $(node --version)
             npm run build
+      - store_artifacts:
+          path: www
 
   # deploy step will run only after manual approval
   deploy:
-    # more setup needed for aws, node, elastic beanstalk
+    docker:
+      - image: "cimg/base:stable"
+      # more setup needed for aws, node, elastic beanstalk
     steps:
       - eb/setup
       - aws-cli/setup
@@ -29,22 +35,20 @@ jobs:
           name: Deploy the backend
           command: |
             echo "deploy Backend"
-            npm run deploy
+            chmod +x bin/deploy.sh && bin/deploy.sh
 
 workflows:
   coffe-shop:
     jobs:
-      - docker:
-          - image: "cimg/node:16.17"
-          - build
-          - hold:
-              filters:
-                branches:
-                  only:
-                    - master
-              type: approval
-              requires:
-                - build
-          - deploy:
-              requires:
-                - hold
+      - build
+      - hold:
+          filters:
+            branches:
+              only:
+                - master
+          type: approval
+          requires:
+            - build
+      - deploy:
+          requires:
+            - hold
