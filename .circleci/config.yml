@@ -45,6 +45,7 @@ jobs:
 workflows:
   coffe-shop:
     jobs:
+      - build
       - hold:
           filters:
             branches:
