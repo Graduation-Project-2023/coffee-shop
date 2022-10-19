@@ -21,6 +21,9 @@ export const read = (repo: IRepo) => {
       const data = await repo.read({
         id,
       });
+      if (!data) {
+        throw new Error("Resource not found");
+      }
       res.status(200).json(data);
     } catch (error: any) {
       return next(error);
