@@ -27,16 +27,17 @@ hosted on [AWS](http://coffee-shop.us-east-1.elasticbeanstalk.com/)
 - PUT `/api/products/:id` - [admin token] body: `{ name?, price?, description?, hasToppings? }` - updates a product
 - DELETE `/api/products/:id` - [admin token] - deletes a product
 
+### Toppings
+
+- GET `/api/toppings` - get all toppings
+- GET `/api/toppings/:id` - get topping by id
+- POST `/api/toppings` - [admin token] body: `{ name, price, image? }` - creates a new topping
+- PUT `/api/toppings/:id` - [admin token] body: `{ name?, price?, image? }` - updates a topping
+- DELETE `/api/toppings/:id` - [admin token] - deletes a topping
+
 ### Orders
 
 - GET `/api/orders` - [admin token] - get all orders
 - GET `/api/orders/:id` - [admin token] - get an order by id
 - POST `/api/orders` - [user token] body: `{ items: [{ description, productId, size, sugar, price }] }` - creates a new order
 - DELETE `/api/orders/:id` - [admin token] - deletes an order
-
-<!-- - GET `/api/toppings` - get all toppings
-- GET `/api/toppings/:id` - get topping by id
-- POST `/api/toppings` - [admin token] body: `{ name, price, image? }` - creates a new topping
-- PUT `/api/toppings/:id` - [admin token] body: `{ name?, price?, image? }` - updates a topping
-- DELETE `/api/toppings/:id` - [admin token] - deletes a topping
- -->
