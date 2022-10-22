@@ -10,10 +10,17 @@ export class OrderRepo implements IRepo {
   }) {
     const { items, ...order } = data;
     const total = getOrderPrice(items);
+    if (!items) {
+      throw "order must include at least one item";
+    }
     return await prisma.order.create({
       data: {
-        customerId: order.customerId,
         orderDate: new Date(),
+        customer: {
+          connect: {
+            userId: order.customerId,
+          },
+        },
         total,
         items: {
           createMany: {
